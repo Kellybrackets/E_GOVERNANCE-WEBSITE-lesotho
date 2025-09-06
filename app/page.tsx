@@ -9,6 +9,8 @@ import { Search, FileText, CreditCard, MapPin, Heart, GraduationCap, Shield, Tru
 import Link from "next/link"
 import { useTranslation } from "@/lib/translations"
 import LesothoLoading from "@/components/lesotho-loading"
+import BreakingNewsBanner from "@/components/breaking-news-banner"
+import NewsGrid from "@/components/news-grid"
 
 const featuredServices = [
   {
@@ -148,32 +150,6 @@ const ministries = [
   },
 ]
 
-const news = [
-  {
-    title: "New Digital ID Cards Now Available",
-    date: "2024-01-20",
-    type: "announcement",
-    urgent: false,
-  },
-  {
-    title: "System Maintenance - January 25, 2024",
-    date: "2024-01-22",
-    type: "alert",
-    urgent: true,
-  },
-  {
-    title: "Mobile Money Integration Goes Live",
-    date: "2024-01-18",
-    type: "news",
-    urgent: false,
-  },
-  {
-    title: "Tax Filing Deadline Extended to March 31",
-    date: "2024-01-15",
-    type: "announcement",
-    urgent: false,
-  },
-]
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -232,6 +208,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white page-content-fade-in">
+      {/* Breaking News Banner */}
+      <BreakingNewsBanner />
+      
       {/* Modern Navigation Bar */}
       <nav className="bg-white shadow-md sticky top-0 z-50 border-b border-gray-100">
         <div className="container mx-auto px-4 lg:px-8">
@@ -489,18 +468,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Explore Lesotho Preview */}
+      {/* Latest News & Updates */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50/30">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#002F6C] mb-6">{t('Explore Lesotho')}</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#002F6C] mb-6">{t('Latest News & Updates')}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {t('Discover the Kingdom through interactive maps, rich cultural heritage, and historical landmarks - all in one seamless experience')}
+              {t('Stay informed with the latest government announcements, policy changes, and important updates from across Lesotho')}
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-3 gap-8 mb-12">
+            <div className="lg:col-span-2">
+              <NewsGrid showFilters={false} maxItems={6} />
+            </div>
+            
             <div className="space-y-6">
+              {/* Explore Lesotho Card */}
               <div className="bg-white rounded-2xl p-8 card-shadow hover-lift">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-[#002F6C] to-[#007849] rounded-xl flex items-center justify-center">
@@ -508,25 +492,26 @@ export default function HomePage() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{t('Know Lesotho')}</h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-600 leading-relaxed mb-4">
                       {t('Your complete guide to exploring places, services, history, and culture - unified in one powerful platform.')}
                     </p>
-                    <Link href="/explore-lesotho" className="inline-flex items-center text-[#007849] font-semibold mt-3 hover:underline">
+                    <Link href="/explore-lesotho" className="inline-flex items-center text-[#007849] font-semibold hover:underline">
                       {t('Start Exploring')} <ArrowRight className="ml-1 w-4 h-4" />
                     </Link>
                   </div>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-2 gap-4 text-center">
-                <div className="bg-gradient-to-br from-[#007849]/10 to-[#007849]/20 rounded-xl p-4">
+
+              {/* Quick Feature Cards */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-gradient-to-br from-[#007849]/10 to-[#007849]/20 rounded-xl p-4 text-center">
                   <div className="w-8 h-8 bg-[#007849] rounded-lg mx-auto mb-2 flex items-center justify-center">
                     <MapPin className="w-4 h-4 text-white" />
                   </div>
                   <h4 className="font-semibold text-sm text-[#007849]">{t('Map Explorer')}</h4>
                   <p className="text-xs text-gray-600 mt-1">{t('Interactive locations')}</p>
                 </div>
-                <div className="bg-gradient-to-br from-[#002F6C]/10 to-[#002F6C]/20 rounded-xl p-4">
+                <div className="bg-gradient-to-br from-[#002F6C]/10 to-[#002F6C]/20 rounded-xl p-4 text-center">
                   <div className="w-8 h-8 bg-[#002F6C] rounded-lg mx-auto mb-2 flex items-center justify-center">
                     <GraduationCap className="w-4 h-4 text-white" />
                   </div>
@@ -534,29 +519,19 @@ export default function HomePage() {
                   <p className="text-xs text-gray-600 mt-1">{t('History & artifacts')}</p>
                 </div>
               </div>
-            </div>
-            
-            <div className="relative">
-              <div className="bg-gradient-to-br from-[#002F6C] to-[#007849] rounded-3xl p-8 text-white">
-                <h3 className="text-2xl font-bold mb-4">{t('Latest Updates')}</h3>
-                <div className="space-y-4">
-                  {news.slice(0, 3).map((item, index) => (
-                    <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h4 className="font-semibold mb-1">{item.title}</h4>
-                          <p className="text-sm text-blue-100">{item.date}</p>
-                        </div>
-                        {item.urgent && (
-                          <Badge className="bg-red-500 text-white text-xs">Urgent</Badge>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <Button variant="secondary" className="mt-6 w-full bg-white/20 hover:bg-white/30 text-white border-white/30">
-                  {t('View All Updates')}
-                </Button>
+
+              {/* View All News Button */}
+              <div className="bg-gradient-to-br from-[#002F6C] to-[#007849] rounded-2xl p-6 text-white text-center">
+                <h4 className="font-bold text-lg mb-2">More News</h4>
+                <p className="text-blue-100 text-sm mb-4">
+                  Access our complete news archive with advanced filtering and search capabilities
+                </p>
+                <Link href="/news">
+                  <Button variant="secondary" className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30">
+                    {t('View All News')}
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
