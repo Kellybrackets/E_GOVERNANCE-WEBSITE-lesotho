@@ -18,6 +18,7 @@ const civicFeatures = [
     bgColor: "bg-blue-50/80",
     stats: "24/7 Available",
     featured: true,
+    image: "/images/stock/cultural/AdobeStock_162645844_Preview.jpeg",
   },
   {
     icon: FileText,
@@ -28,6 +29,7 @@ const civicFeatures = [
     bgColor: "bg-green-50/80",
     stats: "1,234 Reports Resolved",
     featured: true,
+    image: "/images/stock/cultural/AdobeStock_226715477_Preview.jpeg",
   },
   {
     icon: Vote,
@@ -38,6 +40,7 @@ const civicFeatures = [
     bgColor: "bg-blue-50/80",
     stats: "15 Active Surveys",
     featured: false,
+    image: "/images/stock/cultural/AdobeStock_333787378_Preview.jpeg",
   },
   {
     icon: AlertTriangle,
@@ -48,6 +51,7 @@ const civicFeatures = [
     bgColor: "bg-green-50/80",
     stats: "23 Active Alerts",
     featured: false,
+    image: "/images/stock/cultural/AdobeStock_415582243_Preview.jpeg",
   },
 ]
 
@@ -139,17 +143,34 @@ export default function CivicVoicePage() {
             {civicFeatures.map((feature, index) => (
               <Link key={index} href={feature.href} className="group">
                 <Card className="h-full hover-lift card-shadow border-0 bg-gradient-to-br from-white to-gray-50/50 overflow-hidden group-hover:from-white group-hover:to-blue-50/30 transition-all duration-300">
-                  {feature.featured && (
-                    <div className="absolute top-4 right-4 z-10">
-                      <Badge className="bg-[#007849] text-white font-semibold px-3 py-1">
-                        Featured
-                      </Badge>
+                  {/* Feature Image Header */}
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={feature.image}
+                      alt={`${feature.title} illustration`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                    
+                    {/* Featured Badge */}
+                    {feature.featured && (
+                      <div className="absolute top-4 right-4 z-10">
+                        <Badge className="bg-[#007849] text-white font-semibold px-3 py-1">
+                          Featured
+                        </Badge>
+                      </div>
+                    )}
+                    
+                    {/* Floating Icon */}
+                    <div className="absolute bottom-4 left-4">
+                      <div className={`w-12 h-12 ${feature.bgColor} backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg`}>
+                        <feature.icon className={`w-6 h-6 ${feature.color}`} />
+                      </div>
                     </div>
-                  )}
+                  </div>
+
                   <CardHeader className="pb-4">
-                    <div className={`w-20 h-20 rounded-2xl ${feature.bgColor} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <feature.icon className={`w-10 h-10 ${feature.color}`} />
-                    </div>
                     <CardTitle className="text-xl font-bold text-gray-900 mb-3">{feature.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0">

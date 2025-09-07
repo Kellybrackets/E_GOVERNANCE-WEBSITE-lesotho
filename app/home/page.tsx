@@ -22,6 +22,7 @@ import {
   Star
 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { useTranslation } from "@/lib/translations"
 import LesothoLoading from "@/components/lesotho-loading"
 import InteractiveIDCard from "@/components/interactive-id-card"
@@ -160,8 +161,14 @@ function AuthenticatedHomePage() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo Section */}
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-[#002F6C] to-[#007849] rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-lg lg:text-xl">L</span>
+              <div className="w-10 h-10 lg:w-12 lg:h-12 relative">
+                <Image
+                  src="/images/stock/hero/lesotho logo.png"
+                  alt="Lesotho Government Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
               <div>
                 <h1 className="text-xl lg:text-2xl font-bold text-[#002F6C]">Welcome back, {mockUser.firstName}</h1>
@@ -175,7 +182,15 @@ function AuthenticatedHomePage() {
                 <Bell className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">2</span>
               </Button>
-              <Link href="/dashboard/profile">
+              <Link href="/dashboard/profile" className="flex items-center space-x-2">
+                <div className="w-8 h-8 relative rounded-full overflow-hidden border-2 border-[#002F6C]/20">
+                  <Image
+                    src="/images/stock/general/pexels-thato-moiketsi-909645793-32697666.jpg"
+                    alt="User profile picture"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <Button variant="outline" className="border-[#002F6C] text-[#002F6C] hover:bg-[#002F6C] hover:text-white">
                   Profile
                 </Button>
@@ -189,6 +204,15 @@ function AuthenticatedHomePage() {
         {/* Welcome Section */}
         <section className="mb-8">
           <div className="bg-gradient-to-r from-[#002F6C] to-[#007849] rounded-3xl p-8 text-white relative overflow-hidden">
+            {/* Background Image */}
+            <div className="absolute inset-0">
+              <Image
+                src="/images/stock/cultural/arthur-hickinbotham-BtCaXJ8BJjY-unsplash.jpg"
+                alt="Government building in Maseru"
+                fill
+                className="object-cover opacity-10"
+              />
+            </div>
             <div className="absolute inset-0 hero-pattern opacity-20"></div>
             <div className="relative">
               <div className="flex items-center justify-between mb-6">
@@ -339,25 +363,57 @@ function AuthenticatedHomePage() {
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <Link href="/services/national-id" className="group">
-                  <div className="bg-white rounded-xl p-4 text-center hover-lift card-shadow group-hover:bg-blue-50 transition-all">
+                  <div className="relative bg-white rounded-xl p-4 text-center hover-lift card-shadow group-hover:bg-blue-50 transition-all overflow-hidden">
+                    <div className="absolute top-2 right-2 w-6 h-6 opacity-20">
+                      <Image
+                        src="/images/stock/general/flag-1361377_1280.jpg"
+                        alt="National ID illustration"
+                        fill
+                        className="object-cover rounded"
+                      />
+                    </div>
                     <FileText className="w-8 h-8 mx-auto mb-2 text-[#002F6C]" />
                     <p className="font-semibold text-sm">National ID</p>
                   </div>
                 </Link>
                 <Link href="/services/passport" className="group">
-                  <div className="bg-white rounded-xl p-4 text-center hover-lift card-shadow group-hover:bg-green-50 transition-all">
+                  <div className="relative bg-white rounded-xl p-4 text-center hover-lift card-shadow group-hover:bg-green-50 transition-all overflow-hidden">
+                    <div className="absolute top-2 right-2 w-6 h-6 opacity-20">
+                      <Image
+                        src="/images/stock/general/samuel-quek-Hw38cNYa1bE-unsplash.jpg"
+                        alt="Passport illustration"
+                        fill
+                        className="object-cover rounded"
+                      />
+                    </div>
                     <Shield className="w-8 h-8 mx-auto mb-2 text-[#007849]" />
                     <p className="font-semibold text-sm">Passport</p>
                   </div>
                 </Link>
                 <Link href="/services/tax-filing" className="group">
-                  <div className="bg-white rounded-xl p-4 text-center hover-lift card-shadow group-hover:bg-blue-50 transition-all">
+                  <div className="relative bg-white rounded-xl p-4 text-center hover-lift card-shadow group-hover:bg-blue-50 transition-all overflow-hidden">
+                    <div className="absolute top-2 right-2 w-6 h-6 opacity-20">
+                      <Image
+                        src="/images/stock/general/pexels-fibonacci-edits-2148429681-30092665.jpg"
+                        alt="Tax services illustration"
+                        fill
+                        className="object-cover rounded"
+                      />
+                    </div>
                     <CreditCard className="w-8 h-8 mx-auto mb-2 text-[#002F6C]" />
                     <p className="font-semibold text-sm">Tax Services</p>
                   </div>
                 </Link>
                 <Link href="/services/land-title" className="group">
-                  <div className="bg-white rounded-xl p-4 text-center hover-lift card-shadow group-hover:bg-green-50 transition-all">
+                  <div className="relative bg-white rounded-xl p-4 text-center hover-lift card-shadow group-hover:bg-green-50 transition-all overflow-hidden">
+                    <div className="absolute top-2 right-2 w-6 h-6 opacity-20">
+                      <Image
+                        src="/images/stock/general/jandre-van-der-walt-Fy0AHKOw3o0-unsplash.jpg"
+                        alt="Land registration illustration"
+                        fill
+                        className="object-cover rounded"
+                      />
+                    </div>
                     <MapPin className="w-8 h-8 mx-auto mb-2 text-[#007849]" />
                     <p className="font-semibold text-sm">Land Registration</p>
                   </div>

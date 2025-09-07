@@ -4,70 +4,15 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Search, FileText, CreditCard, MapPin, Heart, GraduationCap, Shield, Truck, Bell, ArrowRight, Users, Globe, CheckCircle, TrendingUp } from "lucide-react"
+import { Search, Heart, GraduationCap, Shield, Truck, ArrowRight, Users, Globe, CheckCircle, TrendingUp, MapPin, CreditCard, Bell } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { useTranslation } from "@/lib/translations"
+import SafeImage from "@/components/safe-image"
 import LesothoLoading from "@/components/lesotho-loading"
 import BreakingNewsBanner from "@/components/breaking-news-banner"
 import NewsGrid from "@/components/news-grid"
 
-const featuredServices = [
-  {
-    icon: FileText,
-    title: "National ID",
-    subtitle: "Apply or renew your identity document",
-    href: "/services/national-id",
-    color: "text-[#002F6C]",
-    bgColor: "bg-blue-50/80",
-    popular: true,
-  },
-  {
-    icon: FileText,
-    title: "Passport Services",
-    subtitle: "Travel document applications & renewals",
-    href: "/services/passport",
-    color: "text-[#007849]",
-    bgColor: "bg-green-50/80",
-    popular: true,
-  },
-  {
-    icon: CreditCard,
-    title: "Tax Services",
-    subtitle: "File returns & pay taxes online",
-    href: "/services/tax-filing",
-    color: "text-[#002F6C]",
-    bgColor: "bg-blue-50/80",
-    popular: false,
-  },
-  {
-    icon: MapPin,
-    title: "Land Registration",
-    subtitle: "Property titles & registrations",
-    href: "/services/land-title",
-    color: "text-[#007849]",
-    bgColor: "bg-green-50/80",
-    popular: true,
-  },
-  {
-    icon: Shield,
-    title: "Business Licensing",
-    subtitle: "Register and license your business",
-    href: "/services/business-license",
-    color: "text-[#002F6C]",
-    bgColor: "bg-blue-50/80",
-    popular: false,
-  },
-  {
-    icon: GraduationCap,
-    title: "Education Certificates",
-    subtitle: "Academic credentials & verification",
-    href: "/services/education",
-    color: "text-[#007849]",
-    bgColor: "bg-green-50/80",
-    popular: false,
-  },
-]
 
 const statistics = [
   {
@@ -96,14 +41,6 @@ const statistics = [
   },
 ]
 
-const popularLinks = [
-  { name: "National ID Application", href: "/services/national-id" },
-  { name: "Passport Renewal", href: "/services/passport" },
-  { name: "Birth Certificate", href: "/services/birth-certificate" },
-  { name: "Marriage Certificate", href: "/services/marriage-certificate" },
-  { name: "Tax Filing", href: "/services/tax-filing" },
-  { name: "Business Registration", href: "/services/business-license" },
-]
 
 const ministries = [
   {
@@ -112,6 +49,7 @@ const ministries = [
     description: "Healthcare services and medical records",
     href: "/ministries/health",
     color: "bg-red-50 border-red-200",
+    image: "/images/stock/ministries/minihealth.webp",
   },
   {
     name: "Ministry of Home Affairs",
@@ -119,6 +57,7 @@ const ministries = [
     description: "Identity documents and civil registration",
     href: "/ministries/home-affairs",
     color: "bg-blue-50 border-blue-200",
+    image: "/images/stock/ministries/Homeaffiars.webp",
   },
   {
     name: "Lesotho Revenue Authority",
@@ -126,6 +65,7 @@ const ministries = [
     description: "Tax services and customs",
     href: "/ministries/lra",
     color: "bg-green-50 border-green-200",
+    image: "/images/stock/ministries/LRA_1_1.jpg",
   },
   {
     name: "Land Administration Authority",
@@ -133,6 +73,7 @@ const ministries = [
     description: "Land registration and property services",
     href: "/ministries/laa",
     color: "bg-yellow-50 border-yellow-200",
+    image: "/images/stock/general/thomas-bennie-aomT_Dl2oOI-unsplash.jpg",
   },
   {
     name: "Ministry of Transport",
@@ -140,6 +81,7 @@ const ministries = [
     description: "Vehicle registration and licensing",
     href: "/ministries/transport",
     color: "bg-purple-50 border-purple-200",
+    image: "/images/stock/general/pexels-benjamin-olivier-schaeuffele-487831539-23331286.jpg",
   },
   {
     name: "Ministry of Education",
@@ -147,6 +89,7 @@ const ministries = [
     description: "Educational services and certification",
     href: "/ministries/education",
     color: "bg-indigo-50 border-indigo-200",
+    image: "/images/stock/general/pexels-beth-swart-135444397-10260794.jpg",
   },
 ]
 
@@ -217,8 +160,14 @@ export default function HomePage() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo Section */}
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-[#002F6C] to-[#007849] rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-lg lg:text-xl">L</span>
+              <div className="w-10 h-10 lg:w-12 lg:h-12 relative">
+                <Image
+                  src="/images/stock/hero/lesotho logo.png"
+                  alt="Lesotho Government Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-xl lg:text-2xl font-bold text-[#002F6C]">{t('Government of Lesotho')}</h1>
@@ -231,7 +180,7 @@ export default function HomePage() {
               <Link href="/" className="text-[#002F6C] font-semibold border-b-2 border-[#002F6C] pb-1 transition-colors">
                 {t('Home')}
               </Link>
-              <Link href="/services" className="text-gray-600 hover:text-[#002F6C] font-medium transition-colors duration-200">
+              <Link href="/login" className="text-gray-600 hover:text-[#002F6C] font-medium transition-colors duration-200">
                 {t('Services')}
               </Link>
               <Link href="/civic-voice" className="text-gray-600 hover:text-[#002F6C] font-medium transition-colors duration-200">
@@ -280,6 +229,18 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#002F6C] via-[#003d7a] to-[#007849] overflow-hidden">
+        {/* Hero Background Image */}
+        <div className="absolute inset-0">
+          <SafeImage
+            src="/images/stock/general/lesotho-927577_1280.jpg"
+            alt="Beautiful Lesotho mountains landscape"
+            fill
+            className="object-cover opacity-20"
+            priority
+            fallbackSrc="/images/stock/general/flag-1361377_1280.jpg"
+          />
+        </div>
+        
         {/* Background Pattern */}
         <div className="absolute inset-0 hero-pattern opacity-30"></div>
         
@@ -324,12 +285,12 @@ export default function HomePage() {
 
             {/* Quick Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-in-right">
-              <Link href="/services/national-id">
+              <Link href="/login">
                 <Button className="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-3 rounded-xl font-semibold backdrop-blur-sm transition-all duration-200 hover:scale-105">
                   {t('Apply for National ID')}
                 </Button>
               </Link>
-              <Link href="/services">
+              <Link href="/login">
                 <Button variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#002F6C] px-8 py-3 rounded-xl font-semibold transition-all duration-200 hover:scale-105">
                   {t('Browse All Services')}
                 </Button>
@@ -362,70 +323,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Services */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#002F6C] mb-6">{t('Featured Services')}</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {t('Quick access to our most popular government services. Fast, secure, and available 24/7.')}
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredServices.map((service, index) => (
-              <Link key={index} href={service.href} className="group">
-                <Card className="h-full hover-lift card-shadow border-0 bg-gradient-to-br from-white to-gray-50/50 overflow-hidden group-hover:from-white group-hover:to-blue-50/30 transition-all duration-300">
-                  {service.popular && (
-                    <div className="absolute top-4 right-4 z-10">
-                      <Badge className="bg-[#007849] text-white font-semibold px-3 py-1">
-                        {t('Popular')}
-                      </Badge>
-                    </div>
-                  )}
-                  <CardContent className="p-8 text-center relative">
-                    <div className={`w-20 h-20 rounded-2xl ${service.bgColor} flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <service.icon className={`w-10 h-10 ${service.color}`} />
-                    </div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-3">{t(service.title)}</h4>
-                    <p className="text-gray-600 mb-6 leading-relaxed">{t(service.subtitle)}</p>
-                    <Button 
-                      size="lg" 
-                      className="w-full bg-[#007849] hover:bg-[#005a37] text-white font-semibold py-3 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-200"
-                    >
-                      {t('Apply Now')}
-                      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Popular Links */}
-      <section className="py-16 bg-gray-50/50">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#002F6C] mb-4">{t('Popular Services')}</h2>
-            <p className="text-lg text-gray-600">{t('Quick access to frequently requested services')}</p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {popularLinks.map((link, index) => (
-              <Link key={index} href={link.href} className="group">
-                <div className="bg-white rounded-xl p-4 text-center hover-lift card-shadow border border-gray-100 group-hover:border-[#007849]/20 transition-all duration-200">
-                  <h4 className="text-sm font-semibold text-gray-900 group-hover:text-[#002F6C] transition-colors">
-                    {t(link.name)}
-                  </h4>
-                  <ArrowRight className="w-4 h-4 mx-auto mt-2 text-gray-400 group-hover:text-[#007849] group-hover:translate-x-1 transition-all" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Ministries & Agencies */}
       <section className="py-20 bg-white">
@@ -440,22 +338,35 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {ministries.map((ministry, index) => (
               <Link key={index} href={ministry.href} className="group">
-                <Card className="h-full hover-lift card-shadow border-0 bg-gradient-to-br from-white to-gray-50/50 group-hover:from-white group-hover:to-blue-50/30 transition-all duration-300">
-                  <CardHeader className="pb-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-14 h-14 bg-gradient-to-br from-[#002F6C] to-[#007849] rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <ministry.icon className="w-7 h-7 text-white" />
+                <Card className="h-full hover-lift card-shadow border-0 bg-gradient-to-br from-white to-gray-50/50 group-hover:from-white group-hover:to-blue-50/30 transition-all duration-300 overflow-hidden">
+                  {/* Ministry Image Header */}
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={ministry.image}
+                      alt={`${ministry.name} building`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                    {/* Floating Icon */}
+                    <div className="absolute bottom-4 left-4">
+                      <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
+                        <ministry.icon className="w-6 h-6 text-[#00247D]" />
                       </div>
-                      <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-[#002F6C] transition-colors">
-                        {t(ministry.name)}
-                      </CardTitle>
                     </div>
+                  </div>
+                  
+                  {/* Enhanced Header */}
+                  <CardHeader className="pb-4 text-center">
+                    <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-[#00247D] transition-colors leading-tight">
+                      {t(ministry.name)}
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-gray-600 mb-6 leading-relaxed">{t(ministry.description)}</p>
+                  <CardContent className="pt-0 px-6 pb-6">
+                    <p className="text-gray-600 mb-6 leading-relaxed text-center">{t(ministry.description)}</p>
                     <Button 
                       variant="outline" 
-                      className="w-full border-[#007849]/20 text-[#007849] hover:bg-[#007849] hover:text-white font-semibold py-3 rounded-xl transition-all duration-200"
+                      className="w-full border-[#009A49]/30 text-[#009A49] hover:bg-[#009A49] hover:text-white font-semibold py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
                     >
                       {t('View Services')}
                       <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -478,58 +389,121 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-3 gap-8 mb-12">
-            <div className="lg:col-span-2">
-              <NewsGrid showFilters={false} maxItems={6} />
+          {/* News Grid */}
+          <div className="mb-12">
+            <NewsGrid showFilters={false} maxItems={3} />
+          </div>
+
+          {/* Enhanced Know Lesotho Section */}
+          <div className="max-w-6xl mx-auto mb-12">
+            <div className="bg-white rounded-3xl p-8 lg:p-12 card-shadow hover-lift overflow-hidden">
+              {/* Main Header */}
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#00247D] to-[#009A49] rounded-full flex items-center justify-center shadow-lg">
+                  <MapPin className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">{t('Know Lesotho')}</h3>
+                <p className="text-lg text-gray-600 leading-relaxed mb-6 max-w-3xl mx-auto">
+                  {t('Your complete guide to exploring places, services, history, and culture - unified in one powerful platform.')}
+                </p>
+                <Link href="/explore-lesotho" className="inline-flex items-center text-[#009A49] font-semibold hover:underline text-lg">
+                  {t('Start Exploring')} <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </div>
+
+              {/* Dual Image Strategy with Feature Cards */}
+              <div className="grid lg:grid-cols-2 gap-8 mt-12">
+                {/* Map Explorer Image & Card */}
+                <div className="group">
+                  <div className="relative rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div className="relative h-64">
+                      <Image
+                        src="/images/stock/general/south-africa-742507_1280.jpg"
+                        alt="Interactive map of Lesotho terrain"
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#009A49]/80 to-transparent"></div>
+                    </div>
+                    
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                      {/* Icon Container */}
+                      <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg mb-4">
+                        <MapPin className="w-6 h-6 text-[#009A49]" />
+                      </div>
+                      
+                      <h4 className="font-bold text-xl mb-2">{t('Map Explorer')}</h4>
+                      <p className="text-white/90 leading-relaxed">
+                        {t('Interactive locations and geographic insights across the Kingdom of Lesotho')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Cultural Heritage Image & Card */}
+                <div className="group">
+                  <div className="relative rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div className="relative h-64">
+                      <Image
+                        src="/images/stock/cultural/angelo-moleele-URroWgc_x2w-unsplash.jpg"
+                        alt="Traditional Basotho village and cultural heritage"
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#00247D]/80 to-transparent"></div>
+                    </div>
+                    
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                      {/* Icon Container */}
+                      <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg mb-4">
+                        <GraduationCap className="w-6 h-6 text-[#00247D]" />
+                      </div>
+                      
+                      <h4 className="font-bold text-xl mb-2">{t('Cultural Heritage')}</h4>
+                      <p className="text-white/90 leading-relaxed">
+                        {t('Rich history, traditions, and cultural artifacts of the Basotho people')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Call to Action */}
+              <div className="mt-8 text-center">
+                <div className="inline-flex items-center bg-gradient-to-r from-[#00247D]/5 to-[#009A49]/5 rounded-full px-6 py-3">
+                  <span className="text-gray-600 text-sm font-medium">
+                    Discover the beauty and heritage of Lesotho through our interactive platform
+                  </span>
+                </div>
+              </div>
             </div>
-            
-            <div className="space-y-6">
-              {/* Explore Lesotho Card */}
-              <div className="bg-white rounded-2xl p-8 card-shadow hover-lift">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#002F6C] to-[#007849] rounded-xl flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{t('Know Lesotho')}</h3>
-                    <p className="text-gray-600 leading-relaxed mb-4">
-                      {t('Your complete guide to exploring places, services, history, and culture - unified in one powerful platform.')}
-                    </p>
-                    <Link href="/explore-lesotho" className="inline-flex items-center text-[#007849] font-semibold hover:underline">
-                      {t('Start Exploring')} <ArrowRight className="ml-1 w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
+          </div>
 
-              {/* Quick Feature Cards */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-[#007849]/10 to-[#007849]/20 rounded-xl p-4 text-center">
-                  <div className="w-8 h-8 bg-[#007849] rounded-lg mx-auto mb-2 flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-white" />
-                  </div>
-                  <h4 className="font-semibold text-sm text-[#007849]">{t('Map Explorer')}</h4>
-                  <p className="text-xs text-gray-600 mt-1">{t('Interactive locations')}</p>
-                </div>
-                <div className="bg-gradient-to-br from-[#002F6C]/10 to-[#002F6C]/20 rounded-xl p-4 text-center">
-                  <div className="w-8 h-8 bg-[#002F6C] rounded-lg mx-auto mb-2 flex items-center justify-center">
-                    <GraduationCap className="w-4 h-4 text-white" />
-                  </div>
-                  <h4 className="font-semibold text-sm text-[#002F6C]">{t('Cultural Heritage')}</h4>
-                  <p className="text-xs text-gray-600 mt-1">{t('History & artifacts')}</p>
-                </div>
+          {/* Enhanced More News Section */}
+          <div className="max-w-3xl mx-auto mb-12">
+            <div className="bg-gradient-to-br from-[#00247D] to-[#009A49] rounded-2xl p-8 text-white text-center shadow-xl overflow-hidden relative">
+              {/* Decorative Background Pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <svg className="w-full h-full" viewBox="0 0 200 200" fill="none">
+                  <circle cx="50" cy="50" r="20" stroke="#FFFFFF" strokeWidth="1" fill="none" />
+                  <circle cx="150" cy="80" r="15" stroke="#FFFFFF" strokeWidth="1" fill="none" />
+                  <circle cx="80" cy="150" r="25" stroke="#FFFFFF" strokeWidth="1" fill="none" />
+                  <path d="M20 20 L40 40 M160 40 L180 20 M40 160 L20 180" stroke="#FFFFFF" strokeWidth="1" />
+                </svg>
               </div>
-
-              {/* View All News Button */}
-              <div className="bg-gradient-to-br from-[#002F6C] to-[#007849] rounded-2xl p-6 text-white text-center">
-                <h4 className="font-bold text-lg mb-2">More News</h4>
-                <p className="text-blue-100 text-sm mb-4">
+              
+              <div className="relative z-10">
+                <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
+                  <Bell className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="font-bold text-2xl mb-3">More News</h4>
+                <p className="text-white/90 text-lg mb-6 leading-relaxed">
                   Access our complete news archive with advanced filtering and search capabilities
                 </p>
                 <Link href="/news">
-                  <Button variant="secondary" className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30">
+                  <Button variant="secondary" className="bg-white text-[#00247D] hover:bg-white/90 font-semibold py-3 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
                     {t('View All News')}
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
               </div>
@@ -558,7 +532,7 @@ export default function HomePage() {
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
-              <Link href="/services">
+              <Link href="/register">
                 <Button
                   size="lg"
                   variant="outline"
@@ -579,8 +553,13 @@ export default function HomePage() {
             {/* Logo and Description */}
             <div className="lg:col-span-1">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-white to-gray-200 rounded-xl flex items-center justify-center">
-                  <span className="text-[#002F6C] font-bold text-xl">L</span>
+                <div className="w-12 h-12 bg-white rounded-xl p-2 relative">
+                  <Image
+                    src="/images/stock/hero/lesotho logo.png"
+                    alt="Lesotho Government Logo"
+                    fill
+                    className="object-contain p-1"
+                  />
                 </div>
                 <div>
                   <h5 className="font-bold text-xl">{t('Government of Lesotho')}</h5>
@@ -597,22 +576,22 @@ export default function HomePage() {
               <h6 className="font-bold text-lg mb-6 text-white">{t('Services')}</h6>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/services" className="text-blue-100 hover:text-white transition-colors duration-200 flex items-center">
+                  <Link href="/login" className="text-blue-100 hover:text-white transition-colors duration-200 flex items-center">
                     {t('All Services')} <ArrowRight className="ml-2 w-3 h-3" />
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services/national-id" className="text-blue-100 hover:text-white transition-colors duration-200">
+                  <Link href="/login" className="text-blue-100 hover:text-white transition-colors duration-200">
                     {t('National ID')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services/passport" className="text-blue-100 hover:text-white transition-colors duration-200">
+                  <Link href="/login" className="text-blue-100 hover:text-white transition-colors duration-200">
                     {t('Passport Services')}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services/tax-filing" className="text-blue-100 hover:text-white transition-colors duration-200">
+                  <Link href="/login" className="text-blue-100 hover:text-white transition-colors duration-200">
                     {t('Tax Filing')}
                   </Link>
                 </li>

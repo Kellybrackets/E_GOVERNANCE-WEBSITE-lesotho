@@ -53,7 +53,13 @@ export default function ChatPage() {
   useEffect(() => {
     const savedMessages = localStorage.getItem("civicChatMessages")
     if (savedMessages) {
-      setMessages(JSON.parse(savedMessages))
+      const parsedMessages = JSON.parse(savedMessages)
+      // Convert timestamp strings back to Date objects
+      const messagesWithDates = parsedMessages.map((message: any) => ({
+        ...message,
+        timestamp: new Date(message.timestamp)
+      }))
+      setMessages(messagesWithDates)
     }
   }, [])
 
@@ -143,7 +149,15 @@ export default function ChatPage() {
   }
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    // Ensure we have a valid Date object
+    const validDate = date instanceof Date ? date : new Date(date)
+    
+    // Check if the date is valid
+    if (isNaN(validDate.getTime())) {
+      return "Invalid time"
+    }
+    
+    return validDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   }
 
   return (
@@ -262,7 +276,7 @@ export default function ChatPage() {
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     placeholder="Type your message..."
-                    onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+                    onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                     className="flex-1"
                   />
                   <Button onClick={sendMessage} className="bg-[#002366] hover:bg-blue-800">

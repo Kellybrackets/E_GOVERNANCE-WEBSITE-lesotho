@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = "force-dynamic"
+
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -251,6 +253,117 @@ export default function LocalAlertsPage() {
                   Post Alert
                 </Button>
               </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Post Community Alert</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="alertTitle">Alert Title *</Label>
+                    <Input
+                      id="alertTitle"
+                      value={newAlert.title}
+                      onChange={(e) => setNewAlert((prev) => ({ ...prev, title: e.target.value }))}
+                      placeholder="Brief description of the issue"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="alertCategory">Category *</Label>
+                      <Select
+                        value={newAlert.category}
+                        onValueChange={(value) => setNewAlert((prev) => ({ ...prev, category: value }))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories
+                            .filter((c) => c.id !== "all")
+                            .map((category) => (
+                              <SelectItem key={category.id} value={category.id}>
+                                <span className="flex items-center">
+                                  <span className="mr-2">{category.icon}</span>
+                                  {category.label}
+                                </span>
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label htmlFor="alertDistrict">District *</Label>
+                      <Select
+                        value={newAlert.district}
+                        onValueChange={(value) => setNewAlert((prev) => ({ ...prev, district: value }))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select district" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {districts
+                            .filter((d) => d !== "All Districts")
+                            .map((district) => (
+                              <SelectItem key={district} value={district}>
+                                {district}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="alertLocation">Specific Location *</Label>
+                    <Input
+                      id="alertLocation"
+                      value={newAlert.location}
+                      onChange={(e) => setNewAlert((prev) => ({ ...prev, location: e.target.value }))}
+                      placeholder="Street, landmark, or area name"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="alertDescription">Description *</Label>
+                    <Textarea
+                      id="alertDescription"
+                      value={newAlert.description}
+                      onChange={(e) => setNewAlert((prev) => ({ ...prev, description: e.target.value }))}
+                      placeholder="Provide details about the situation..."
+                      rows={4}
+                    />
+                  </div>
+
+                  <div>
+                    <Label>Add Photo (Optional)</Label>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                      <Upload className="w-6 h-6 mx-auto mb-2 text-gray-400" />
+                      <p className="text-sm text-gray-600">Click to upload image</p>
+                      <input type="file" className="hidden" accept="image/*" />
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 pt-4">
+                    <Button
+                      onClick={handleCreateAlert}
+                      className="flex-1 bg-[#002366] hover:bg-blue-800"
+                      disabled={
+                        !newAlert.title ||
+                        !newAlert.description ||
+                        !newAlert.location ||
+                        !newAlert.district ||
+                        !newAlert.category
+                      }
+                    >
+                      Post Alert
+                    </Button>
+                    <Button variant="outline" onClick={() => setIsCreateModalOpen(false)}>
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
             </Dialog>
           </div>
         </div>
@@ -382,119 +495,6 @@ export default function LocalAlertsPage() {
             <p className="text-gray-500 text-lg">No alerts found for the selected filters.</p>
           </div>
         )}
-
-        {/* Create Alert Modal */}
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Post Community Alert</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="alertTitle">Alert Title *</Label>
-              <Input
-                id="alertTitle"
-                value={newAlert.title}
-                onChange={(e) => setNewAlert((prev) => ({ ...prev, title: e.target.value }))}
-                placeholder="Brief description of the issue"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="alertCategory">Category *</Label>
-                <Select
-                  value={newAlert.category}
-                  onValueChange={(value) => setNewAlert((prev) => ({ ...prev, category: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories
-                      .filter((c) => c.id !== "all")
-                      .map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
-                          <span className="flex items-center">
-                            <span className="mr-2">{category.icon}</span>
-                            {category.label}
-                          </span>
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="alertDistrict">District *</Label>
-                <Select
-                  value={newAlert.district}
-                  onValueChange={(value) => setNewAlert((prev) => ({ ...prev, district: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select district" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {districts
-                      .filter((d) => d !== "All Districts")
-                      .map((district) => (
-                        <SelectItem key={district} value={district}>
-                          {district}
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="alertLocation">Specific Location *</Label>
-              <Input
-                id="alertLocation"
-                value={newAlert.location}
-                onChange={(e) => setNewAlert((prev) => ({ ...prev, location: e.target.value }))}
-                placeholder="Street, landmark, or area name"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="alertDescription">Description *</Label>
-              <Textarea
-                id="alertDescription"
-                value={newAlert.description}
-                onChange={(e) => setNewAlert((prev) => ({ ...prev, description: e.target.value }))}
-                placeholder="Provide details about the situation..."
-                rows={4}
-              />
-            </div>
-
-            <div>
-              <Label>Add Photo (Optional)</Label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                <Upload className="w-6 h-6 mx-auto mb-2 text-gray-400" />
-                <p className="text-sm text-gray-600">Click to upload image</p>
-                <input type="file" className="hidden" accept="image/*" />
-              </div>
-            </div>
-
-            <div className="flex gap-2 pt-4">
-              <Button
-                onClick={handleCreateAlert}
-                className="flex-1 bg-[#002366] hover:bg-blue-800"
-                disabled={
-                  !newAlert.title ||
-                  !newAlert.description ||
-                  !newAlert.location ||
-                  !newAlert.district ||
-                  !newAlert.category
-                }
-              >
-                Post Alert
-              </Button>
-              <Button variant="outline" onClick={() => setIsCreateModalOpen(false)}>
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
       </div>
     </div>
   )

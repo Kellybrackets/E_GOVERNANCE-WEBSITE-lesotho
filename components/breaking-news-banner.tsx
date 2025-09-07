@@ -16,19 +16,19 @@ interface BreakingNews {
 
 const mockBreakingNews: BreakingNews[] = [
   {
-    id: "1",
-    title: "URGENT: System maintenance scheduled for January 30, 2024 - Services may be temporarily unavailable",
+    id: "3",
+    title: "URGENT: New digital services now available for Lesotho citizens - eGov portal fully operational",
     urgency: "urgent",
-    link: "/news/system-maintenance-jan-30-2024",
-    publishedAt: "2024-01-29T10:00:00Z",
+    link: "/news/new-digital-services-2025",
+    publishedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
     canDismiss: true
   },
   {
-    id: "2", 
-    title: "BREAKING: Law Society drags Parliament to Constitutional Court over controversial legislation",
+    id: "4", 
+    title: "BREAKING: Enhanced security measures implemented for government online services",
     urgency: "important",
-    link: "/news/law-society-parliament-court-case",
-    publishedAt: "2024-01-29T14:30:00Z",
+    link: "/news/security-enhancement-2025",
+    publishedAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4 hours ago
     canDismiss: true
   }
 ]
@@ -43,7 +43,21 @@ export default function BreakingNewsBanner() {
     if (typeof window !== 'undefined') {
       const dismissed = localStorage.getItem('dismissedBreakingNews')
       if (dismissed) {
-        setDismissedNews(JSON.parse(dismissed))
+        try {
+          const parsedDismissed = JSON.parse(dismissed)
+          // If all current news items are dismissed, reset the dismissed list
+          const allCurrentItemsDismissed = mockBreakingNews.every(news => parsedDismissed.includes(news.id))
+          if (allCurrentItemsDismissed) {
+            localStorage.removeItem('dismissedBreakingNews')
+            setDismissedNews([])
+          } else {
+            setDismissedNews(parsedDismissed)
+          }
+        } catch (error) {
+          // Clear corrupted localStorage data
+          localStorage.removeItem('dismissedBreakingNews')
+          setDismissedNews([])
+        }
       }
     }
   }, [])
@@ -53,9 +67,10 @@ export default function BreakingNewsBanner() {
 
   // Auto-rotate through news items
   useEffect(() => {
-    if (activeNews.length > 1) {
+    const displayNews = activeNews.length > 0 ? activeNews : [mockBreakingNews[0]]
+    if (displayNews.length > 1) {
       const interval = setInterval(() => {
-        setCurrentNewsIndex((prev) => (prev + 1) % activeNews.length)
+        setCurrentNewsIndex((prev) => (prev + 1) % displayNews.length)
       }, 8000) // Change every 8 seconds
 
       return () => clearInterval(interval)
@@ -76,8 +91,9 @@ export default function BreakingNewsBanner() {
     }
 
     // If we dismissed the current news, move to next
-    if (activeNews.length > 1) {
-      setCurrentNewsIndex((prev) => prev % (activeNews.length - 1))
+    const newActiveNews = mockBreakingNews.filter(news => !updatedDismissed.includes(news.id))
+    if (newActiveNews.length > 1) {
+      setCurrentNewsIndex((prev) => prev % (newActiveNews.length - 1))
     }
   }
 
@@ -115,10 +131,9 @@ export default function BreakingNewsBanner() {
     return date.toLocaleDateString()
   }
 
-  // Don't render if no active news
-  if (activeNews.length === 0) return null
-
-  const currentNews = activeNews[currentNewsIndex]
+  // Emergency fallback if no active news - show at least one item
+  const displayNews = activeNews.length > 0 ? activeNews : [mockBreakingNews[0]]
+  const currentNews = displayNews[Math.min(currentNewsIndex, displayNews.length - 1)]
   const styles = getUrgencyStyles(currentNews.urgency)
 
   return (
@@ -165,11 +180,11 @@ export default function BreakingNewsBanner() {
                   <span className="text-xs text-white/80">
                     {formatTimeAgo(currentNews.publishedAt)}
                   </span>
-                  {activeNews.length > 1 && (
+                  {displayNews.length > 1 && (
                     <>
                       <span className="text-white/60">•</span>
                       <span className="text-xs text-white/80">
-                        {currentNewsIndex + 1} of {activeNews.length}
+                        {currentNewsIndex + 1} of {displayNews.length}
                       </span>
                     </>
                   )}
@@ -195,9 +210,9 @@ export default function BreakingNewsBanner() {
           {/* Right Side - Actions */}
           <div className="flex items-center space-x-2 flex-shrink-0">
             {/* Progress Indicators */}
-            {activeNews.length > 1 && (
+            {displayNews.length > 1 && (
               <div className="hidden sm:flex items-center space-x-1">
-                {activeNews.map((_, index) => (
+                {displayNews.map((_, index) => (
                   <div
                     key={index}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
@@ -248,8 +263,8 @@ export default function BreakingNewsBanner() {
         <div 
           className="h-full bg-white transition-all duration-8000 ease-linear"
           style={{
-            width: activeNews.length > 1 ? '100%' : '0%',
-            animation: activeNews.length > 1 ? 'progress 8s linear infinite' : 'none'
+            width: displayNews.length > 1 ? '100%' : '0%',
+            animation: displayNews.length > 1 ? 'progress 8s linear infinite' : 'none'
           }}
         />
       </div>

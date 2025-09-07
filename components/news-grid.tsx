@@ -48,7 +48,7 @@ const mockNewsArticles: NewsArticle[] = [
     title: "Law Society drags Parliament to Constitutional Court over controversial legislation",
     excerpt: "The Law Society of Lesotho has filed a constitutional challenge against Parliament regarding recent legislative changes that affect judicial independence.",
     content: "Full article content would go here...",
-    featuredImage: "/placeholder.jpg",
+    featuredImage: "/images/stock/news/news3.jpg",
     publishedAt: "2024-01-29T14:30:00Z",
     author: "Thabo Mofolo",
     category: "Legal",
@@ -63,7 +63,7 @@ const mockNewsArticles: NewsArticle[] = [
     title: "Bantu MMC launches M50 million micro-loan fund for small businesses",
     excerpt: "Bantu Microfinance and Credit Cooperative has announced a new micro-loan initiative to support small and medium enterprises across Lesotho.",
     content: "Full article content would go here...",
-    featuredImage: "/placeholder.jpg",
+    featuredImage: "/images/stock/news/news5.jpg",
     publishedAt: "2024-01-28T09:15:00Z",
     author: "Palesa Ramokoatsi",
     category: "Economy",
@@ -78,7 +78,7 @@ const mockNewsArticles: NewsArticle[] = [
     title: "Manufacturers cry foul over surge in brick imports from South Africa",
     excerpt: "Local brick manufacturers are calling for government intervention as cheap imports threaten domestic production and employment.",
     content: "Full article content would go here...",
-    featuredImage: "/placeholder.jpg", 
+    featuredImage: "/images/stock/news/news6.jpg", 
     publishedAt: "2024-01-27T11:45:00Z",
     author: "Motlatsi Thabane",
     category: "Economy",
@@ -88,51 +88,6 @@ const mockNewsArticles: NewsArticle[] = [
     featured: false,
     urgent: false
   },
-  {
-    id: "4",
-    title: "Sehlabathebe hydroelectric power project set to resume operations",
-    excerpt: "The long-stalled Sehlabathebe power project is expected to resume construction following resolution of funding disputes.",
-    content: "Full article content would go here...",
-    featuredImage: "/placeholder.jpg",
-    publishedAt: "2024-01-26T16:20:00Z", 
-    author: "Lineo Moletsane",
-    category: "Energy",
-    tags: ["Hydroelectric", "Energy", "Infrastructure", "Development"],
-    readTime: "7 min",
-    views: 3102,
-    featured: true,
-    urgent: false
-  },
-  {
-    id: "5",
-    title: "Digital ID system maintenance scheduled for weekend",
-    excerpt: "Citizens are advised that digital identity services will be temporarily unavailable during scheduled system upgrades.",
-    content: "Full article content would go here...",
-    featuredImage: "/placeholder.jpg",
-    publishedAt: "2024-01-25T13:00:00Z",
-    author: "System Administrator",
-    category: "Government", 
-    tags: ["Digital ID", "Maintenance", "System Update", "eGovernment"],
-    readTime: "2 min",
-    views: 892,
-    featured: false,
-    urgent: true
-  },
-  {
-    id: "6",
-    title: "New mobile money integration goes live for government payments",
-    excerpt: "Citizens can now pay for government services using popular mobile money platforms, making transactions more convenient.",
-    content: "Full article content would go here...",
-    featuredImage: "/placeholder.jpg",
-    publishedAt: "2024-01-24T10:30:00Z",
-    author: "Rethabile Mokone",
-    category: "Technology",
-    tags: ["Mobile Money", "eGovernment", "Digital Payments", "Innovation"],
-    readTime: "4 min",
-    views: 2156,
-    featured: true,
-    urgent: false
-  }
 ]
 
 const categories = ["All", "Government", "Legal", "Economy", "Energy", "Technology", "Sports"]

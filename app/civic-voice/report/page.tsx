@@ -1,8 +1,10 @@
 "use client"
 
+export const dynamic = "force-dynamic"
+
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -78,12 +80,14 @@ export default function ReportPage() {
   const [existingReports, setExistingReports] = useState<Report[]>([])
 
   // Load existing reports from localStorage
-  useState(() => {
-    const saved = localStorage.getItem("civicReports")
-    if (saved) {
-      setExistingReports(JSON.parse(saved))
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem("civicReports")
+      if (saved) {
+        setExistingReports(JSON.parse(saved))
+      }
     }
-  })
+  }, [])
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -102,7 +106,9 @@ export default function ReportPage() {
     // Save to localStorage
     const updatedReports = [...existingReports, newReport]
     setExistingReports(updatedReports)
-    localStorage.setItem("civicReports", JSON.stringify(updatedReports))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("civicReports", JSON.stringify(updatedReports))
+    }
 
     setSubmittedReport(newReport)
     setIsSubmitted(true)
